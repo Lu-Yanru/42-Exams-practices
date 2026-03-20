@@ -16,5 +16,13 @@ def sort_strings(input: list[str]) -> list[str]:
           )
     return res
 
-words = ["apple", "pie", "banana", "Cat", "dog", "elephant", "ant", "bee"]
-print(sort_strings(words))
+
+words1 = ["apple", "pie", "banana", "Cat", "dog", "elephant", "ant", "bee"]
+print(sort_strings(words1))
+words2 = ["aaa", "bbb", "AAA", "BBB"]
+print(sort_strings(words2))
+words3 = ["algorithm", "Algorithm", "ALGORITHM"]
+print(sort_strings(words3))
+words4 = ["", "Algorithm", "ALGORITHM"]
+print(sort_strings(words4))
+print(sort_strings([]))

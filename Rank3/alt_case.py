@@ -1,13 +1,17 @@
 def alt_case(orig: str) -> str:
     res = []
     i = 0
-    while i < len(orig):
-        if i % 2 == 0:
-            res.append(orig[i].upper())
+    for c in orig:
+        if c.isalpha():
+            if i % 2 == 0:
+                res.append(c.upper())
+            else:
+                res.append(c.lower())
+            i += 1
         else:
-            res.append(orig[i].lower())
-        i += 1
+            res.append(c)
+
     return "".join(res)
     
-print(alt_case("abCD"))
+print(alt_case("ab123CD"))
 
