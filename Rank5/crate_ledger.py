@@ -73,6 +73,81 @@ def unpack_tally(packed: str) -> str:
     return res
 
 
+def pack_tally2(tally: str) -> str:
+    if not tally:
+        return ""
+
+    result = []
+    i = 0
+    n = len(tally)
+
+    while i < n:
+        letter = tally[i]
+        # Count how far this run of identical letters extends.
+        run_len = 1
+        while i + run_len < n and tally[i + run_len] == letter:
+            run_len += 1
+
+        # Emit the run in blocks of at most 9, since shorthand only allows
+        # single-digit counts. Each block is fully consumed before moving on.
+        remaining = run_len
+        while remaining > 0:
+            block = min(remaining, 9)
+            if block == 1:
+                # Rule: a run of exactly 1 skips the number entirely.
+                result.append(letter)
+            else:
+                result.append(letter + str(block))
+            remaining -= block
+
+        i += run_len  # jump past the whole run, not just one character
+
+    return "".join(result)
+
+
+def unpack_tally2(packed: str) -> str:
+    if not packed:
+        return ""
+
+    result = []
+    i = 0
+    n = len(packed)
+
+    while i < n:
+        letter = packed[i]
+        i += 1
+        # Peek at the next character: if it's a single digit, it's the count
+        # for this letter; otherwise the letter is implicitly a lone occurrence.
+        if i < n and packed[i].isdigit():
+            count = int(packed[i])
+            i += 1
+        else:
+            count = 1
+        result.append(letter * count)
+
+    return "".join(result)
+
+
+def unpack_tally3(packed: str) -> str:
+    if not packed:
+        return ""
+
+    res = ""
+    i = 0
+    while i < len(packed):
+        if packed[i].isdigit():
+            res += packed[i - 1] * int(packed[i])
+        else:
+            if i + 1 < len(packed) and packed[i + 1].isdigit():
+                i += 1
+                continue
+            else:
+                res += packed[i]
+        i += 1
+
+    return res
+
+
 print("====pack====")
 print(pack_tally("aabccca"))
 print(pack_tally("abc"))
